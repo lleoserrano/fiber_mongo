@@ -2,13 +2,14 @@ package db
 
 import (
 	"context"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 func UpdateByID(collection, id string, data, result any) error {
-	client, ctx := getConnection()
+	client, ctx := getClient()
 	defer client.Disconnect(ctx)
 
 	c := client.Database(dbname).Collection(collection)

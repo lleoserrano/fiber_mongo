@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	"github.com/gofiber/fiber/v2"
+	"github.com/lleoserrano/fiber_mongo/db"
 	"github.com/lleoserrano/fiber_mongo/tags"
 	"github.com/lleoserrano/fiber_mongo/tasks"
 	"github.com/lleoserrano/fiber_mongo/users"
@@ -12,6 +13,7 @@ import (
 func main() {
 	app := fiber.New()
 	v1 := app.Group("/v1")
+	defer db.CloseClient()
 
 	users.SetRoutes(v1)
 	tasks.SetRoutes(v1)

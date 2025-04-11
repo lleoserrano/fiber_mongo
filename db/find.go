@@ -1,33 +1,29 @@
 package db
 
 import (
-	"context"
-
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func FindAll(collection string, filter bson.M, documents any) error {
-	client, ctx := getConnection()
-	defer client.Disconnect(ctx)
+	client, ctx := getClient()
 
 	c := client.Database(dbname).Collection(collection)
 	if filter == nil {
 		filter = bson.M{}
 	}
 
-	cursor, err := c.Find(context.Background(), filter)
+	cursor, err := c.Find(ctx, filter)
 	if err != nil {
 		return err
 	}
-	defer cursor.Close(context.Background())
+	defer cursor.Close(ctx)
 
-	return cursor.All(context.Background(), documents)
+	return cursor.All(ctx, documents)
 }
 
 func FindByID(collection string, id string, document any) error {
-	client, ctx := getConnection()
-	defer client.Disconnect(ctx)
+	client, ctx := getClient()
 
 	c := client.Database(dbname).Collection(collection)
 
@@ -37,14 +33,13 @@ func FindByID(collection string, id string, document any) error {
 	}
 
 	filter := bson.M{"_id": objectID}
-	return c.FindOne(context.Background(), filter).Decode(document)
+	return c.FindOne(ctx, filter).Decode(document)
 }
 
 func FindOne(collection string, filter bson.M, document any) error {
-	client, ctx := getConnection()
-	defer client.Disconnect(ctx)
+	client, ctx := getClient()
 
 	c := client.Database(dbname).Collection(collection)
 
-	return c.FindOne(context.Background(), filter).Decode(document)
+	return c.FindOne(ctx, filter).Decode(document)
 }

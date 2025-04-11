@@ -8,6 +8,7 @@ A RESTful API built with Go Fiber and MongoDB that provides CRUD operations for 
 - MongoDB integration for data persistence
 - Modular architecture with separation of concerns
 - Support for nested relationships (tasks with tags)
+- Singleton pattern for MongoDB connection to optimize performance
 
 ## Prerequisites
 

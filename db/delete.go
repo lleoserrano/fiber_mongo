@@ -2,13 +2,13 @@ package db
 
 import (
 	"fmt"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func DeleteByID(collection, id string) error {
-	client, ctx := getConnection()
-	defer client.Disconnect(ctx)
+	client, ctx := getClient()
 
 	c := client.Database(dbname).Collection(collection)
 
@@ -29,5 +29,4 @@ func DeleteByID(collection, id string) error {
 	}
 
 	return nil
-
 }
