@@ -14,7 +14,7 @@ LABEL authors="lleoserrano"
 
 WORKDIR /app
 
-COPY --from=build /app/api /app/
+COPY --from=build /app/api /app
 
 EXPOSE 8000
 
